@@ -5,7 +5,8 @@ import appex
 import console
 import datetime
 import clipboard
-import utilities
+import urllib2
+
 
 #clipboard.set('https://youtu.be/fTTGALaRZoc')
 
@@ -16,6 +17,13 @@ console.clear()
 
 import LKEvernoteApi
 
+
+def title_of_url(url):
+  try:
+    soup = BeautifulSoup(urllib2.urlopen(url))
+    return soup.title.string
+u  except:
+    return ''
 
 
 guid = '__YOUR_NOTE_GUID_HERE__'
@@ -37,7 +45,7 @@ else:
 			sys.exit('Clipboard is empty, no arguments passed to script')
 
 LKEvernoteApi.log_progress('Loading title of passed url')
-url_title = ' (' + utilities.title_of_url(input) + ') '
+url_title = ' (' + title_of_url(input) + ') '
 
 if url_title is ' () ':
 	url_title = ''
