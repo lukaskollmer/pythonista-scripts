@@ -10,10 +10,7 @@ UIReferenceLibraryViewController = ObjCClass('UIReferenceLibraryViewController')
 
 @on_main_thread
 def main():
-	if len(sys.argv) > 1:
-		input = ' '.join(sys.argv[1:])
-	else:
-		input = dialogs.text_dialog()
+	input = ' '.join(sys.argv[1:]) or dialogs.text_dialog()
 	if input:
 		referenceViewController = UIReferenceLibraryViewController.alloc().initWithTerm_(input)
 		
