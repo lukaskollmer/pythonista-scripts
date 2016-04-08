@@ -34,12 +34,9 @@ def application_openURL_sourceApplication_annotation_(_self, _sel, app, url, sou
 	if not 'xcallbackresponse-' + str(_requestID) in url_str:
 		print('not from x-callback-url, will run original function')
 		obj = ObjCInstance(_self)
-		original_method = getattr(obj,'original'+c.sel_getName(_sel),None)
+		original_method = getattr(obj, 'original'+c.sel_getName(_sel), None)
 		if original_method:
-			if annotation:
-				_annotation = ObjCInstance(annotation)
-			else:
-				_annotation = None
+			_annotation = ObjCInstance(annotation) if annotation else None
 			return original_method(ObjCInstance(app), ObjCInstance(url), ObjCInstance(source_app), _annotation)
 	else:
 		x_callback_info = x_callback_response()
@@ -51,8 +48,7 @@ def application_openURL_sourceApplication_annotation_(_self, _sel, app, url, sou
 		for queryItem in query.queryItems():
 			x_callback_info.parameters[str(queryItem.name())] = str(queryItem.value())
 			
-		if not _handler == None:
-			_handler(x_callback_info)
+		_handler == _handler or _handler(x_callback_info)
 		return True
 
 
