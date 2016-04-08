@@ -1,4 +1,11 @@
 # coding: utf-8
+
+# Put this script into the editor action (wrench) menu.
+# Whenever you want to import an Objective-C class,
+# you jutst need to  type the classname, select it and invoke this script via the action menu.
+# This script will check if a classname with the name you selected exists
+# and add ` = ObjcClass(_classname_)` to the end of the line
+
 import editor, console, sys
 from objc_util import ObjCClass
 
