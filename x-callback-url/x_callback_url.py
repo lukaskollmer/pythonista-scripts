@@ -48,7 +48,8 @@ def application_openURL_sourceApplication_annotation_(_self, _sel, app, url, sou
 		for queryItem in query.queryItems():
 			x_callback_info.parameters[str(queryItem.name())] = str(queryItem.value())
 			
-		_handler == _handler or _handler(x_callback_info)
+		if _handler:
+			_handler(x_callback_info)
 		return True
 
 
