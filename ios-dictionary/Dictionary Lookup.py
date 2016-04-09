@@ -17,7 +17,7 @@ def main():
 		rootVC = UIApplication.sharedApplication().keyWindow().rootViewController()
 		tabVC = rootVC.detailViewController()
 		
-		referenceViewController.setTitle_('Definition: {0}{1}{0}'.format('\'', input))
+		referenceViewController.setTitle_("Definition: '{}'".format(input))
 		referenceViewController.setPreferredContentSize_(CGSize(540, 540))
 		referenceViewController.setModalPresentationStyle_(2)
 		
