@@ -22,7 +22,7 @@ def title_of_url(url):
   try:
     soup = BeautifulSoup(urllib2.urlopen(url))
     return soup.title.string
-  except:  # caution: naked exception
+  except:  # caution: avoid naked exceptions
     return ''
 
 
