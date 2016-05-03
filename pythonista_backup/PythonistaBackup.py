@@ -16,7 +16,7 @@ import keychain
 import ui
 try:
 	from reprint_line import reprint
-except InportError:
+except ImportError:
 	reprint = print
 
 console.clear()
