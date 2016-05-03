@@ -14,7 +14,10 @@ from objc_util import NSBundle
 import sys
 import keychain
 import ui
-#from reprint_line import reprint
+try:
+	from reprint_line import reprint
+except InputError:
+	reprint = print
 
 console.clear()
 
@@ -57,10 +60,7 @@ def perform_backup(quiet=True):
 	bucket_name = 'lukaskollmer'
 	
 	def percent_cb(complete, total):
-		progress = (str(round(((float(complete) / float(total)) * 100), 2)) + ' %')
-		progress_string = '{}'.format(progress)
-		print(progress_string)
-		#reprint(progress_string)
+		reprint('{}'.format(round(float(complete) / float(total) * 100, 2)))
 	
 	s3 = boto.connect_s3(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 	bucket = s3.get_bucket(bucket_name)
