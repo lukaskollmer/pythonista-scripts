@@ -3,17 +3,19 @@
 
 from __future__ import print_function
 
-import os
-import shutil
-import tempfile
-import console
-import time
 import boto
 from boto.s3.key import Key
-from objc_util import NSBundle
-import sys
+import console
 import keychain
+from objc_util import NSBundle
+import os
+import requests
+import shutil
+import sys
+import tempfile
+import time
 import ui
+
 try:
 	from reprint_line import reprint
 except ImportError:
@@ -25,15 +27,10 @@ console.clear()
 @ui.in_background
 def perform_backup(quiet=True):
 	try:
-		from urllib2 import urlopen
-	except:
-		try:
-			from urllib.request import urlopen
-		except:
-			pass
-	try:
-		urlopen('http://s3.amazonaws.com')
-	except:
+		is_amazon_up = requests.get('http://s3.amazonaws.com').status_code == 200
+	except requests.exceptions.ConnectionError:
+		is_amazon_up = False
+	if not is_amazon_up:
 		if quiet:
 			return
 		else:
