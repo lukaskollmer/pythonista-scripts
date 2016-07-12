@@ -1,63 +1,57 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 '''
 Pythonista template to include some basic information in a header comment
 
-You need to save this file to '~/Documents/Templates', so that Pythonista can find and list it in the "New File" dialog
+You need to save this file to '~/Documents/Templates', so that Pythonista
+can find and list it in the "New File" dialog
 '''
 
+import datetime
 import dialogs
 import editor
-import datetime
 import os
-import string
 
 __author__ = 'Lukas Kollmer'
-__copyright__ = 'Copyright (c) 2016 Lukas Kollmer<lukas@kollmer.me>'
-
-template_text = '''\'\'\'
-${description}
-
-${documentation}
-\'\'\'
-
-__author__ = '${author_name}'
-__copyright__ = 'Copyright (c) ${year} ${author_name}'
-'''
-
-template = string.Template(template_text)
-
-file_path = editor.get_path()
-filename = os.path.basename(file_path)
+__copyright__ = 'Copyright © 2016 Lukas Kollmer <lukas@kollmer.me>'
 
 
-# Get the information
+def title_key_dict(title, key):
+    return {'type': 'text', 'title': title, 'key': key}
 
-fields = []
+fields = ([title_key_dict('Author', 'author_name'),       # section 1 rows
+           title_key_dict('Email', 'email')],
+          [title_key_dict('Description', 'description'),  # section 2 rows
+           title_key_dict('Documentation', 'documentation')])
 
-fields.append([  # Section 1 rows
-	#{'type': 'text', 'title': 'File name', 'value': filename, 'key': 'filename'},
-	{'type': 'text', 'title': 'Author', 'key': 'author_name'}
-])
-
-fields.append([  # Section 2 rows
-	{'type': 'text', 'title': 'Description', 'key': 'description'},
-	{'type': 'text', 'title': 'Documentation', 'key': 'documentation'}
-])
-
-
-form_sections = [
-	('About', fields[0], None),
-	('File info', fields[1], None)
-]
+form_sections = (('About', fields[0], None),
+                 ('File info', fields[1], None))
 
 data = dialogs.form_dialog('New File', sections=form_sections)
+assert data, 'No data entered.'
+data['filename'] = os.path.basename(editor.get_path())
+data['copyright_year'] = datetime.datetime.now().year
 
-if not data:
-	import sys
-	sys.exit()
+fmt = """#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-copyright_year = datetime.datetime.now().year
-new_text = template.substitute(**data, year=copyright_year, filename=filename)
+'''
+{filename}: {description}
 
-end = len(editor.get_text())
-editor.replace_text(0, end, new_text)
+{documentation}
+'''
+
+import sys
+
+__author__ = '{author_name}'
+__copyright__ = 'Copyright © {copyright_year}, {author_name} <{email}>'
+__credits__ = ['{author_name}']
+__email__ = '{email}'
+__license__ = 'Apache Software License, v2.0'
+__maintainer__ = '{author_name}'
+__status__ = 'Pre-Alpha'
+__version__ = '0.0.1'
+"""
+
+editor.replace_text(0, len(editor.get_text()), fmt.format(**data))
