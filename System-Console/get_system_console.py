@@ -3,6 +3,7 @@
 # Code from http://stackoverflow.com/a/6145556/2513803
 
 __all__ = ['get_log']
+
 from ctypes import *
 from objc_util import *
 import time
