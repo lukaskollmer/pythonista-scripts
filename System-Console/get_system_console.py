@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Copyright 2016 Lukas Kollmer<lukas@kollmer.me>
-# Code from http://stackoverflow.com/a/6145556/2513803
+# Code adopted for Pythonista from http://stackoverflow.com/a/6145556/2513803
 
 __all__ = ['get_log']
 
