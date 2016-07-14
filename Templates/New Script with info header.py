@@ -30,14 +30,14 @@ form_sections = (('About', fields[0], None),
 
 data = dialogs.form_dialog('New File', sections=form_sections)
 assert data, 'No data entered.'
-data['filename'] = os.path.basename(editor.get_path())
+#data['filename'] = os.path.basename(editor.get_path())
 data['copyright_year'] = datetime.datetime.now().year
 
 fmt = """#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 '''
-{filename}: {description}
+{description}
 
 {documentation}
 '''
@@ -48,7 +48,7 @@ __author__ = '{author_name}'
 __copyright__ = 'Copyright © {copyright_year}, {author_name} <{email}>'
 __credits__ = ['{author_name}']
 __email__ = '{email}'
-__license__ = 'Apache Software License, v2.0'
+__license__ = 'MIT'
 __maintainer__ = '{author_name}'
 __status__ = 'Pre-Alpha'
 __version__ = '0.0.1'
